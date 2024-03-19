@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using VetClinicServer.Requests;
 using VetClinicServer.Services;
+using VetClinicServer.Utils;
+using VetClinicServer.ViewModels;
 
 namespace VetClinicServer.Controllers
 {
@@ -10,11 +12,32 @@ namespace VetClinicServer.Controllers
     {
         private readonly DrugService _service = service;
 
-        [HttpPost]
-        public async Task<IActionResult> GetPageDrugs(GetPagedDrugsRequest request)
+        [HttpGet]
+        public async Task<IActionResult> GetPageDrugs([FromQuery]GetPagedDrugsRequest request)
         {
-            var drugs = await _service.GetPaged(request);
+            PaginatedList<DrugViewModel> drugs = await _service.GetPaged(request);
             return Ok(drugs);
+        }
+
+        [HttpGet("{id}")]
+        public IActionResult GetDrug(int id)
+        {
+            try
+            {
+                DrugViewModel drug = _service.GetById(id);
+                return Ok(drug);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { error = ex.Message });
+            }
+        }
+
+        [HttpPost]
+        public IActionResult CreateDrug(DrugViewModel model)
+        {
+            _service.Create(model);
+            return Ok();
         }
     }
 }
