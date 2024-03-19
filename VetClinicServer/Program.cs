@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using VetClinicServer.Data;
+using VetClinicServer.Repositories;
+using VetClinicServer.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +13,9 @@ builder.Services.AddDbContext<Context>(options =>
 {
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
+
+builder.Services.AddTransient<DrugRepository>();
+builder.Services.AddTransient<DrugService>();
 
 var app = builder.Build();
 
