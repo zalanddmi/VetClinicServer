@@ -7,7 +7,7 @@ namespace VetClinicServer.Utils
         private const int SALT_SIZE = 128 / 8;
         private const int KEY_SIZE = 256 / 8;
         private const int ITERATIONS = 10000;
-        private static readonly HashAlgorithmName _hashAlgorithmName = HashAlgorithmName.SHA3_256;
+        private static readonly HashAlgorithmName _hashAlgorithmName = HashAlgorithmName.SHA256;
 
         public (string, string) Hash(string password)
         {

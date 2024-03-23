@@ -23,6 +23,11 @@ namespace VetClinicServer.Services
             {
                 throw new InvalidDataException("Неправильный пароль");
             }
+            // временно
+            var post = _context.Posts.Find(user.PostId) ?? throw new InvalidDataException("Должность не найдена");
+            post.Role = _context.Roles.Find(post.RoleId);
+            user.Post = post;
+            // конец временно
             string token = _jwtGenerator.GenerateToken(user);
             UserDTO userDTO = new()
             {
@@ -37,6 +42,13 @@ namespace VetClinicServer.Services
             (string passwordHash, string saltHash) = _passwordHasher.Hash(request.Password);
             // временно
             var post = _context.Posts.Find(request.PostId) ?? throw new InvalidDataException("Должность не найдена");
+            post.Role = _context.Roles.Find(post.RoleId);
+            bool isUniqueUserName = _userRepository.GetByUserName(request.UserName) == null;
+            if (!isUniqueUserName)
+            {
+                throw new InvalidDataException("Пользователь с таким логином существует");
+            }
+            // конец временно
             User user = new()
             {
                 UserName = request.UserName,
