@@ -11,5 +11,7 @@ namespace VetClinicServer.Models
         public required string PhoneNumber { get; set; }
         [MaxLength(255)]
         public string? Email { get; set; }
+
+        public virtual ICollection<Pet>? Pets { get; set; }
     }
 }

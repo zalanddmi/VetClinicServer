@@ -10,5 +10,7 @@ namespace VetClinicServer.Models
         public decimal Cost { get; set; }
         public int Quantity { get; set; }
         public string? Description { get; set; }
+
+        public ICollection<AppointmentDrug>? AppointmentDrugs { get; set; }
     }
 }

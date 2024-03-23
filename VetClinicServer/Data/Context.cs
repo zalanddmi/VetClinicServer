@@ -33,7 +33,7 @@ namespace VetClinicServer.Data
 
             modelBuilder.Entity<AppointmentDrug>()
                 .HasOne(ad => ad.Drug)
-                .WithMany()
+                .WithMany(d => d.AppointmentDrugs)
                 .HasForeignKey(ad => ad.DrugId);
         }
     }

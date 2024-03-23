@@ -20,6 +20,7 @@ namespace VetClinicServer.Services
                 Description = model.Description,
             };
             _repository.Create(drug);
+            _repository.Save();
         }
 
         public void Update(DrugViewModel model)
@@ -30,12 +31,14 @@ namespace VetClinicServer.Services
             drug.Quantity = model.Quantity;
             drug.Description = model.Description;
             _repository.Update(drug);
+            _repository.Save();
         }
 
         public void Delete(int id)
         {
             Drug drug = _repository.GetById(id) ?? throw new NullReferenceException("Лекарство не найдено");
             _repository.Delete(drug);
+            _repository.Save();
         }
 
         public DrugViewModel GetById(int id)

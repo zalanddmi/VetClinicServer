@@ -7,6 +7,8 @@ namespace VetClinicServer.Models
     {
         public int Id { get; set; }
         [MaxLength(255)]
+        public required string UserName { get; set; }
+        [MaxLength(255)]
         public required string FIO { get; set; }
         [MaxLength(20)]
         public required string PhoneNumber { get; set; }

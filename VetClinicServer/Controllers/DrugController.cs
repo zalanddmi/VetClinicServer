@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using VetClinicServer.Requests;
 using VetClinicServer.Services;
 using VetClinicServer.Utils;
@@ -13,6 +14,7 @@ namespace VetClinicServer.Controllers
         private readonly DrugService _service = service;
 
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> GetPageDrugs([FromQuery]GetPagedDrugsRequest request)
         {
             PaginatedList<DrugViewModel> drugs = await _service.GetPaged(request);
@@ -20,6 +22,7 @@ namespace VetClinicServer.Controllers
         }
 
         [HttpGet("{id}")]
+        [Authorize]
         public IActionResult GetDrug(int id)
         {
             try
@@ -34,10 +37,41 @@ namespace VetClinicServer.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public IActionResult CreateDrug(DrugViewModel model)
         {
             _service.Create(model);
             return Ok();
+        }
+
+        [HttpPut]
+        [Authorize]
+        public IActionResult UpdateDrug(DrugViewModel model)
+        {
+            try
+            {
+                _service.Update(model);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { error = ex.Message });
+            }
+        }
+
+        [HttpDelete]
+        [Authorize]
+        public IActionResult DeleteDrug(int id)
+        {
+            try
+            {
+                _service.Delete(id);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { error = ex.Message });
+            }
         }
     }
 }

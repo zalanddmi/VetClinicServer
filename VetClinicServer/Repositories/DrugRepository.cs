@@ -15,13 +15,11 @@ namespace VetClinicServer.Repositories
         public void Create(Drug entity)
         {
             _context.Drugs.Add(entity);
-            Save();
         }
 
         public void Delete(Drug entity)
         {
-            _context.Remove(entity);
-            Save();
+            _context.Drugs.Remove(entity);
         }
 
         public IEnumerable<Drug> GetAll()
@@ -41,7 +39,7 @@ namespace VetClinicServer.Repositories
 
         public void Update(Drug entity)
         {
-            _context.Update(entity);
+            _context.Drugs.Update(entity);
         }
 
         public async Task<PaginatedList<Drug>> GetPaged(GetPagedDrugsRequest request)
@@ -55,7 +53,7 @@ namespace VetClinicServer.Repositories
             return list;
         }
 
-        private IQueryable<Drug> ApplySorting(IQueryable<Drug> query, GetPagedDrugsRequest request)
+        private static IQueryable<Drug> ApplySorting(IQueryable<Drug> query, GetPagedDrugsRequest request)
         {
             if (!string.IsNullOrEmpty(request.SearchString))
             {
@@ -65,7 +63,7 @@ namespace VetClinicServer.Repositories
             }
             if (!string.IsNullOrEmpty(request.Name))
             {
-                query = query.Where(d => d.Name.Contains(d.Name));
+                query = query.Where(d => d.Name.Contains(request.Name));
             }
             switch (request.CostComparisonOperators)
             {
@@ -112,7 +110,7 @@ namespace VetClinicServer.Repositories
             return query;
         }
 
-        private IQueryable<Drug> ApplyFilter(IQueryable<Drug> query, GetPagedDrugsRequest request)
+        private static IQueryable<Drug> ApplyFilter(IQueryable<Drug> query, GetPagedDrugsRequest request)
         {
             if (!string.IsNullOrEmpty(request.OrderBy))
             {

@@ -21,6 +21,6 @@ namespace VetClinicServer.Models
         public DateTime? DateCompleted { get; set; }
         public decimal TotalCost { get; set; } = 0;
 
-        public ICollection<AppointmentDrug> AppointmentDrugs { get; set; }
+        public ICollection<AppointmentDrug>? AppointmentDrugs { get; set; }
     }
 }
