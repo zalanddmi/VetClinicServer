@@ -13,7 +13,7 @@ namespace VetClinicServer.Controllers
         private readonly AccountService _accountService = accountService;
 
         [HttpPost("login")]
-        public IActionResult Login([FromQuery]LoginRequest request)
+        public IActionResult Login([FromBody] LoginRequest request)
         {
             try
             {
@@ -28,7 +28,7 @@ namespace VetClinicServer.Controllers
 
         [HttpPost("register")]
         // [Authorize]
-        public IActionResult Register([FromQuery]RegisterRequest request)
+        public IActionResult Register([FromBody] RegisterRequest request)
         {
             try
             {
