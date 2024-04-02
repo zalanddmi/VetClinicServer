@@ -9,6 +9,13 @@ using VetClinicServer.Utils;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(
+      "Development",
+      builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()
+    );
+});
 builder.Services.AddMvc();
 
 builder.Services.AddEndpointsApiExplorer();
@@ -68,15 +75,6 @@ builder.Services.AddSwaggerGen(options =>
 });
 
 
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy(
-      "Development",
-      builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()
-    );
-});
-
-
 builder.Services.AddTransient<DrugRepository>();
 builder.Services.AddTransient<UserRepository>();
 builder.Services.AddTransient<DrugService>();
@@ -85,12 +83,11 @@ builder.Services.AddTransient<JwtGenerator>();
 builder.Services.AddTransient<PasswordHasher>();
 
 var app = builder.Build();
-
+app.UseCors("Development");
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 app.UseEndpoints(endpoints => endpoints.MapControllers());
-app.UseCors("Development");
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
