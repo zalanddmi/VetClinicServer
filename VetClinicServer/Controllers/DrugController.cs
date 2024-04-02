@@ -18,7 +18,13 @@ namespace VetClinicServer.Controllers
         public async Task<IActionResult> GetPageDrugs([FromQuery]GetPagedDrugsRequest request)
         {
             PaginatedList<DrugViewModel> drugs = await _service.GetPaged(request);
-            return Ok(drugs);
+            var list = new PaginatedListDTO<DrugViewModel>
+            {
+                Items = drugs,
+                PageNumber = drugs.PageNumber,
+                TotalPages = drugs.TotalPages
+            };
+            return Ok(list);
         }
 
         [HttpGet("{id}")]

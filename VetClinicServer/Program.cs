@@ -67,6 +67,16 @@ builder.Services.AddSwaggerGen(options =>
     );
 });
 
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(
+      "Development",
+      builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()
+    );
+});
+
+
 builder.Services.AddTransient<DrugRepository>();
 builder.Services.AddTransient<UserRepository>();
 builder.Services.AddTransient<DrugService>();
@@ -80,6 +90,7 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 app.UseEndpoints(endpoints => endpoints.MapControllers());
+app.UseCors("Development");
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
