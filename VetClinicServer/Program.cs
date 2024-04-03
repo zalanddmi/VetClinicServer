@@ -81,6 +81,7 @@ builder.Services.AddTransient<DrugService>();
 builder.Services.AddTransient<AccountService>();
 builder.Services.AddTransient<JwtGenerator>();
 builder.Services.AddTransient<PasswordHasher>();
+builder.Services.AddTransient<ExcelConverter>();
 
 var app = builder.Build();
 app.UseCors("Development");

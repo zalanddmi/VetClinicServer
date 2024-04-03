@@ -79,5 +79,20 @@ namespace VetClinicServer.Controllers
                 return BadRequest(new { error = ex.Message });
             }
         }
+
+        [HttpGet("excel")]
+        [Authorize]
+        public async Task<IActionResult> ExportToExcel([FromQuery] GetDrugsExcelRequest request)
+        {
+            try
+            {
+                byte[] excelBytes = await _service.ExportToExcel(request);
+                return Ok(File(excelBytes, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Лекарства.xlsx"));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { error = ex.Message });
+            }
+        }
     }
 }
