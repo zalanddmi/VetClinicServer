@@ -1,8 +1,6 @@
-﻿using Aspose.Cells;
-using VetClinicServer.Models;
+﻿using VetClinicServer.Models;
 using VetClinicServer.Repositories;
 using VetClinicServer.Requests;
-using VetClinicServer.Requests.Enums;
 using VetClinicServer.Utils;
 using VetClinicServer.ViewModels;
 
@@ -13,7 +11,7 @@ namespace VetClinicServer.Services
         private readonly DrugRepository _drugRepository = drugRepository;
         private readonly ExcelConverter _excelConverter = excelConverter;
 
-        public void Create(DrugViewModel model)
+        public int Create(DrugViewModel model)
         {
             Drug drug = new()
             {
@@ -24,6 +22,7 @@ namespace VetClinicServer.Services
             };
             _drugRepository.Create(drug);
             _drugRepository.Save();
+            return drug.Id;
         }
 
         public void Update(DrugViewModel model)

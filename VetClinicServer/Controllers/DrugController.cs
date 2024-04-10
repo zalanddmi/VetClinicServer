@@ -46,8 +46,7 @@ namespace VetClinicServer.Controllers
         [Authorize]
         public IActionResult CreateDrug(DrugViewModel model)
         {
-            _service.Create(model);
-            return Ok();
+            return Ok(_service.Create(model));
         }
 
         [HttpPut]
