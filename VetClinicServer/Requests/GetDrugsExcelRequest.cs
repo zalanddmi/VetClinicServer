@@ -4,7 +4,7 @@ namespace VetClinicServer.Requests
 {
     public class GetDrugsExcelRequest
     {
-        public string OrderBy { get; set; } = string.Empty;
+        public string OrderBy { get; set; } = "Id";
         public SortDirections SortDirection { get; set; } = SortDirections.Ascending;
         public string Name { get; set; } = string.Empty;
         public decimal Cost { get; set; } = 0;

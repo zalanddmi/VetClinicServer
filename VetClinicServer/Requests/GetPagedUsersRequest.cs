@@ -7,7 +7,7 @@ namespace VetClinicServer.Requests
         public int PageNumber { get; set; } = 1;
         public int PageSize { get; set; } = 10;
         public string SearchString { get; set; } = string.Empty;
-        public string OrderBy { get; set; } = string.Empty;
+        public string OrderBy { get; set; } = "Id";
         public SortDirections SortDirection { get; set; } = SortDirections.Ascending;
         public string UserName { get; set; } = string.Empty;
         public string FIO { get; set; } = string.Empty;
