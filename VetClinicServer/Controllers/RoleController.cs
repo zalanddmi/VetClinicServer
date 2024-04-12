@@ -10,31 +10,31 @@ namespace VetClinicServer.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class DrugController(DrugService drugService) : Controller
+    public class RoleController(RoleService roleService) : Controller
     {
-        private readonly DrugService _drugService = drugService;
+        private readonly RoleService _roleService = roleService;
 
         [HttpGet]
         [Authorize]
-        public async Task<IActionResult> GetPageDrugs([FromQuery]GetPagedDrugsRequest request)
+        public async Task<IActionResult> GetPageRoles([FromQuery] GetPagedRolesRequest request)
         {
-            PaginatedList<DrugViewModel> drugs = await _drugService.GetPaged(request);
-            var list = new PaginatedListDTO<DrugViewModel>
+            PaginatedList<RoleViewModel> roles = await _roleService.GetPaged(request);
+            var list = new PaginatedListDTO<RoleViewModel>
             {
-                Items = drugs,
-                PageNumber = drugs.PageNumber,
-                TotalPages = drugs.TotalPages
+                Items = roles,
+                PageNumber = roles.PageNumber,
+                TotalPages = roles.TotalPages
             };
             return Ok(list);
         }
 
         [HttpGet("{id}")]
         [Authorize]
-        public IActionResult GetDrug(int id)
+        public IActionResult GetRole(int id)
         {
             try
             {
-                DrugViewModel drug = _drugService.GetById(id);
+                RoleViewModel drug = _roleService.GetById(id);
                 return Ok(drug);
             }
             catch (Exception ex)
@@ -45,18 +45,18 @@ namespace VetClinicServer.Controllers
 
         [HttpPost]
         [Authorize]
-        public IActionResult CreateDrug(DrugViewModel model)
+        public IActionResult CreateRole(RoleViewModel model)
         {
-            return Ok(_drugService.Create(model));
+            return Ok(_roleService.Create(model));
         }
 
         [HttpPut]
         [Authorize]
-        public IActionResult UpdateDrug(DrugViewModel model)
+        public IActionResult UpdateRole(RoleViewModel model)
         {
             try
             {
-                _drugService.Update(model);
+                _roleService.Update(model);
                 return Ok();
             }
             catch (Exception ex)
@@ -67,11 +67,11 @@ namespace VetClinicServer.Controllers
 
         [HttpDelete]
         [Authorize]
-        public IActionResult DeleteDrug(int id)
+        public IActionResult DeleteRole(int id)
         {
             try
             {
-                _drugService.Delete(id);
+                _roleService.Delete(id);
                 return Ok();
             }
             catch (Exception ex)
@@ -82,12 +82,12 @@ namespace VetClinicServer.Controllers
 
         [HttpGet("excel")]
         [Authorize]
-        public async Task<IActionResult> ExportToExcel([FromQuery] GetDrugsExcelRequest request)
+        public async Task<IActionResult> ExportToExcel([FromQuery] GetRolesExcelRequest request)
         {
             try
             {
-                byte[] excelBytes = await _drugService.ExportToExcel(request);
-                return Ok(File(excelBytes, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Лекарства.xlsx"));
+                byte[] excelBytes = await _roleService.ExportToExcel(request);
+                return Ok(File(excelBytes, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Роли.xlsx"));
             }
             catch (Exception ex)
             {

@@ -10,31 +10,31 @@ namespace VetClinicServer.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class DrugController(DrugService drugService) : Controller
+    public class SpeciesController(SpeciesService speciesService) : Controller
     {
-        private readonly DrugService _drugService = drugService;
+        private readonly SpeciesService _speciesService = speciesService;
 
         [HttpGet]
         [Authorize]
-        public async Task<IActionResult> GetPageDrugs([FromQuery]GetPagedDrugsRequest request)
+        public async Task<IActionResult> GetPageSpecies([FromQuery] GetPagedSpeciesRequest request)
         {
-            PaginatedList<DrugViewModel> drugs = await _drugService.GetPaged(request);
-            var list = new PaginatedListDTO<DrugViewModel>
+            PaginatedList<SpeciesViewModel> species = await _speciesService.GetPaged(request);
+            var list = new PaginatedListDTO<SpeciesViewModel>
             {
-                Items = drugs,
-                PageNumber = drugs.PageNumber,
-                TotalPages = drugs.TotalPages
+                Items = species,
+                PageNumber = species.PageNumber,
+                TotalPages = species.TotalPages
             };
             return Ok(list);
         }
 
         [HttpGet("{id}")]
         [Authorize]
-        public IActionResult GetDrug(int id)
+        public IActionResult GetSpecies(int id)
         {
             try
             {
-                DrugViewModel drug = _drugService.GetById(id);
+                SpeciesViewModel drug = _speciesService.GetById(id);
                 return Ok(drug);
             }
             catch (Exception ex)
@@ -45,18 +45,18 @@ namespace VetClinicServer.Controllers
 
         [HttpPost]
         [Authorize]
-        public IActionResult CreateDrug(DrugViewModel model)
+        public IActionResult CreateSpecies(SpeciesViewModel model)
         {
-            return Ok(_drugService.Create(model));
+            return Ok(_speciesService.Create(model));
         }
 
         [HttpPut]
         [Authorize]
-        public IActionResult UpdateDrug(DrugViewModel model)
+        public IActionResult UpdateSpecies(SpeciesViewModel model)
         {
             try
             {
-                _drugService.Update(model);
+                _speciesService.Update(model);
                 return Ok();
             }
             catch (Exception ex)
@@ -67,11 +67,11 @@ namespace VetClinicServer.Controllers
 
         [HttpDelete]
         [Authorize]
-        public IActionResult DeleteDrug(int id)
+        public IActionResult DeleteSpecies(int id)
         {
             try
             {
-                _drugService.Delete(id);
+                _speciesService.Delete(id);
                 return Ok();
             }
             catch (Exception ex)
@@ -82,12 +82,12 @@ namespace VetClinicServer.Controllers
 
         [HttpGet("excel")]
         [Authorize]
-        public async Task<IActionResult> ExportToExcel([FromQuery] GetDrugsExcelRequest request)
+        public async Task<IActionResult> ExportToExcel([FromQuery] GetSpeciesExcelRequest request)
         {
             try
             {
-                byte[] excelBytes = await _drugService.ExportToExcel(request);
-                return Ok(File(excelBytes, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Лекарства.xlsx"));
+                byte[] excelBytes = await _speciesService.ExportToExcel(request);
+                return Ok(File(excelBytes, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Виды животных.xlsx"));
             }
             catch (Exception ex)
             {

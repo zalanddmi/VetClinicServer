@@ -1,6 +1,6 @@
 ﻿using VetClinicServer.Requests.Enums;
 
-namespace VetClinicServer.Requests
+namespace VetClinicServer.Requests.Pages
 {
     public class GetPagedUsersRequest
     {

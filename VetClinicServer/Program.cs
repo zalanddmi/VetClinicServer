@@ -59,26 +59,30 @@ builder.Services.AddSwaggerGen(options =>
     options.AddSecurityRequirement(
       new OpenApiSecurityRequirement
       {
-                    {
-                        new OpenApiSecurityScheme
-                        {
-                        Reference = new OpenApiReference
-                        {
-                            Type = ReferenceType.SecurityScheme,
-                            Id = "Bearer"
-                        }
-                        },
-                        Array.Empty<string>()
-                    }
+            {
+                new OpenApiSecurityScheme
+                {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+                },
+                Array.Empty<string>()
+            }
       }
     );
 });
 
 
 builder.Services.AddTransient<DrugRepository>();
+builder.Services.AddTransient<RoleRepository>();
+builder.Services.AddTransient<SpeciesRepository>();
 builder.Services.AddTransient<UserRepository>();
-builder.Services.AddTransient<DrugService>();
 builder.Services.AddTransient<AccountService>();
+builder.Services.AddTransient<DrugService>();
+builder.Services.AddTransient<RoleService>();
+builder.Services.AddTransient<SpeciesService>();
 builder.Services.AddTransient<JwtGenerator>();
 builder.Services.AddTransient<PasswordHasher>();
 builder.Services.AddTransient<ExcelConverter>();
