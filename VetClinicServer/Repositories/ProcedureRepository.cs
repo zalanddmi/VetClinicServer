@@ -7,28 +7,28 @@ using VetClinicServer.Utils;
 
 namespace VetClinicServer.Repositories
 {
-    public class DrugRepository(Context context) : IRepository<Drug>
+    public class ProcedureRepository(Context context) : IRepository<Procedure>
     {
         private readonly Context _context = context;
 
-        public void Create(Drug entity)
+        public void Create(Procedure entity)
         {
-            _context.Drugs.Add(entity);
+            _context.Procedures.Add(entity);
         }
 
-        public void Delete(Drug entity)
+        public void Delete(Procedure entity)
         {
-            _context.Drugs.Remove(entity);
+            _context.Procedures.Remove(entity);
         }
 
-        public IEnumerable<Drug> GetAll()
+        public IEnumerable<Procedure> GetAll()
         {
-            return _context.Drugs;
+            return _context.Procedures;
         }
 
-        public Drug? GetById(int id)
+        public Procedure? GetById(int id)
         {
-            return _context.Drugs.Find(id);
+            return _context.Procedures.Find(id);
         }
 
         public void Save()
@@ -36,29 +36,28 @@ namespace VetClinicServer.Repositories
             _context.SaveChanges();
         }
 
-        public void Update(Drug entity)
+        public void Update(Procedure entity)
         {
-            _context.Drugs.Update(entity);
+            _context.Procedures.Update(entity);
         }
 
-        public async Task<PaginatedList<Drug>> GetPaged(GetPagedDrugsRequest request)
+        public async Task<PaginatedList<Procedure>> GetPaged(GetPagedProceduresRequest request)
         {
-            IQueryable<Drug> query = _context.Drugs;
+            IQueryable<Procedure> query = _context.Procedures;
 
             query = ApplySorting(query, request);
             query = ApplyFilter(query, request);
-            
-            var list = await PaginatedList<Drug>.CreateAsync(query, request.PageNumber, request.PageSize);
+
+            var list = await PaginatedList<Procedure>.CreateAsync(query, request.PageNumber, request.PageSize);
             return list;
         }
 
-        private static IQueryable<Drug> ApplySorting(IQueryable<Drug> query, GetPagedDrugsRequest request)
+        private static IQueryable<Procedure> ApplySorting(IQueryable<Procedure> query, GetPagedProceduresRequest request)
         {
             if (!string.IsNullOrEmpty(request.SearchString))
             {
                 query = query.Where(d => d.Name.Contains(request.SearchString)
-                || d.Cost.ToString().Contains(request.SearchString)
-                || d.Quantity.ToString().Contains(request.SearchString));
+                || d.Cost.ToString().Contains(request.SearchString));
             }
             if (!string.IsNullOrEmpty(request.Name))
             {
@@ -85,31 +84,10 @@ namespace VetClinicServer.Repositories
                     query = query.Where(d => d.Cost > request.Cost);
                     break;
             }
-            switch (request.QuantityComparisonOperators)
-            {
-                case ComparisonOperators.LessThan:
-                    query = query.Where(d => d.Quantity < request.Quantity);
-                    break;
-                case ComparisonOperators.LessThanOrEqual:
-                    query = query.Where(d => d.Quantity <= request.Quantity);
-                    break;
-                case ComparisonOperators.Equal:
-                    query = query.Where(d => d.Quantity == request.Quantity);
-                    break;
-                case ComparisonOperators.NotEqual:
-                    query = query.Where(d => d.Quantity != request.Quantity);
-                    break;
-                case ComparisonOperators.GreaterThanOrEqual:
-                    query = query.Where(d => d.Quantity >= request.Quantity);
-                    break;
-                case ComparisonOperators.GreaterThan:
-                    query = query.Where(d => d.Quantity > request.Quantity);
-                    break;
-            }
             return query;
         }
 
-        private static IQueryable<Drug> ApplyFilter(IQueryable<Drug> query, GetPagedDrugsRequest request)
+        private static IQueryable<Procedure> ApplyFilter(IQueryable<Procedure> query, GetPagedProceduresRequest request)
         {
             if (!string.IsNullOrEmpty(request.OrderBy))
             {
@@ -143,16 +121,6 @@ namespace VetClinicServer.Repositories
                         else
                         {
                             query = query.OrderByDescending(d => d.Cost);
-                        }
-                        break;
-                    case "Quantity":
-                        if (request.SortDirection == SortDirections.Ascending)
-                        {
-                            query = query.OrderBy(d => d.Quantity);
-                        }
-                        else
-                        {
-                            query = query.OrderByDescending(d => d.Quantity);
                         }
                         break;
                     case "Description":
