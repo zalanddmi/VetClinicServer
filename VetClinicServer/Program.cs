@@ -21,7 +21,7 @@ builder.Services.AddMvc();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddDbContext<Context>(options =>
 {
-    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
+    options.UseLazyLoadingProxies().UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
