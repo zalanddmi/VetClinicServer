@@ -11,6 +11,6 @@ namespace VetClinicServer.Models
         public string? Description { get; set; }
         public int RoleId { get; set; }
         [ForeignKey("RoleId")]
-        public required Role Role { get; set; }
+        public virtual required Role Role { get; set; }
     }
 }

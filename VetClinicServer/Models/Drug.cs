@@ -11,6 +11,6 @@ namespace VetClinicServer.Models
         public int Quantity { get; set; }
         public string? Description { get; set; }
 
-        public ICollection<AppointmentDrug>? AppointmentDrugs { get; set; }
+        public virtual ICollection<AppointmentDrug>? AppointmentDrugs { get; set; }
     }
 }

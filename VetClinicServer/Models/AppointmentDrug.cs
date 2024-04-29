@@ -9,7 +9,7 @@ namespace VetClinicServer.Models
         [Key]
         public int DrugId { get; set; }
         public int Quantity { get; set; }
-        public required Appointment Appointment { get; set; }
-        public required Drug Drug { get; set; }
+        public virtual required Appointment Appointment { get; set; }
+        public virtual required Drug Drug { get; set; }
     }
 }

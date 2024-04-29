@@ -20,6 +20,6 @@ namespace VetClinicServer.Models
         public required string Salt { get; set; }
         public int PostId { get; set; }
         [ForeignKey("PostId")]
-        public required Post Post { get; set; }
+        public virtual required Post Post { get; set; }
     }
 }

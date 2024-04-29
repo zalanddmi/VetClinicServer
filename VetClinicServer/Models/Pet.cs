@@ -10,12 +10,12 @@ namespace VetClinicServer.Models
         public required string Name { get; set; }
         public int SpeciesId { get; set; }
         [ForeignKey("SpeciesId")]
-        public required Species Species { get; set; }
+        public virtual required Species Species { get; set; }
         [MaxLength(255)]
         public required string Breed { get; set; }
         public int OwnerId { get; set; }
         [ForeignKey("OwnerId")]
-        public required Owner Owner { get; set; }
+        public virtual required Owner Owner { get; set; }
         public DateTime DateOfBirth { get; set; }
         public string? Description { get; set; }
     }
