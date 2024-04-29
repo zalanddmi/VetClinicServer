@@ -10,12 +10,12 @@ namespace VetClinicServer.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class OwnerController(OwnerService ownerService) : Controller
     {
         private readonly OwnerService _ownerService = ownerService;
 
         [HttpGet]
-        [Authorize]
         public async Task<IActionResult> GetPageOwners([FromQuery] GetPagedOwnersRequest request)
         {
             PaginatedList<OwnerViewModel> owners = await _ownerService.GetPaged(request);
@@ -29,7 +29,6 @@ namespace VetClinicServer.Controllers
         }
 
         [HttpGet("{id}")]
-        [Authorize]
         public IActionResult GetOwner(int id)
         {
             try
@@ -44,14 +43,12 @@ namespace VetClinicServer.Controllers
         }
 
         [HttpPost]
-        [Authorize]
         public IActionResult CreateOwner(OwnerViewModel model)
         {
             return Ok(_ownerService.Create(model));
         }
 
         [HttpPut]
-        [Authorize]
         public IActionResult UpdateOwner(OwnerViewModel model)
         {
             try
@@ -66,7 +63,6 @@ namespace VetClinicServer.Controllers
         }
 
         [HttpDelete]
-        [Authorize]
         public IActionResult DeleteOwner(int id)
         {
             try
@@ -81,7 +77,6 @@ namespace VetClinicServer.Controllers
         }
 
         [HttpGet("excel")]
-        [Authorize]
         public async Task<IActionResult> ExportToExcel([FromQuery] GetOwnersExcelRequest request)
         {
             try

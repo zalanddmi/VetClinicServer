@@ -10,12 +10,12 @@ namespace VetClinicServer.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class ProcedureController(ProcedureService procedureService) : Controller
     {
         private readonly ProcedureService _procedureService = procedureService;
 
         [HttpGet]
-        [Authorize]
         public async Task<IActionResult> GetPageProcedures([FromQuery] GetPagedProceduresRequest request)
         {
             PaginatedList<ProcedureViewModel> procedures = await _procedureService.GetPaged(request);
@@ -29,7 +29,6 @@ namespace VetClinicServer.Controllers
         }
 
         [HttpGet("{id}")]
-        [Authorize]
         public IActionResult GetProcedure(int id)
         {
             try
@@ -44,14 +43,12 @@ namespace VetClinicServer.Controllers
         }
 
         [HttpPost]
-        [Authorize]
         public IActionResult CreateProcedure(ProcedureViewModel model)
         {
             return Ok(_procedureService.Create(model));
         }
 
         [HttpPut]
-        [Authorize]
         public IActionResult UpdateProcedure(ProcedureViewModel model)
         {
             try
@@ -66,7 +63,6 @@ namespace VetClinicServer.Controllers
         }
 
         [HttpDelete]
-        [Authorize]
         public IActionResult DeleteProcedure(int id)
         {
             try
@@ -81,7 +77,6 @@ namespace VetClinicServer.Controllers
         }
 
         [HttpGet("excel")]
-        [Authorize]
         public async Task<IActionResult> ExportToExcel([FromQuery] GetProceduresExcelRequest request)
         {
             try

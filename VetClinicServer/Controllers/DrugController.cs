@@ -10,12 +10,12 @@ namespace VetClinicServer.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class DrugController(DrugService drugService) : Controller
     {
         private readonly DrugService _drugService = drugService;
 
         [HttpGet]
-        [Authorize]
         public async Task<IActionResult> GetPageDrugs([FromQuery]GetPagedDrugsRequest request)
         {
             PaginatedList<DrugViewModel> drugs = await _drugService.GetPaged(request);
@@ -29,7 +29,6 @@ namespace VetClinicServer.Controllers
         }
 
         [HttpGet("{id}")]
-        [Authorize]
         public IActionResult GetDrug(int id)
         {
             try
@@ -44,14 +43,12 @@ namespace VetClinicServer.Controllers
         }
 
         [HttpPost]
-        [Authorize]
         public IActionResult CreateDrug(DrugViewModel model)
         {
             return Ok(_drugService.Create(model));
         }
 
         [HttpPut]
-        [Authorize]
         public IActionResult UpdateDrug(DrugViewModel model)
         {
             try
@@ -66,7 +63,6 @@ namespace VetClinicServer.Controllers
         }
 
         [HttpDelete]
-        [Authorize]
         public IActionResult DeleteDrug(int id)
         {
             try
@@ -81,7 +77,6 @@ namespace VetClinicServer.Controllers
         }
 
         [HttpGet("excel")]
-        [Authorize]
         public async Task<IActionResult> ExportToExcel([FromQuery] GetDrugsExcelRequest request)
         {
             try

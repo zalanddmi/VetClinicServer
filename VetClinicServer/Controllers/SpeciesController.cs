@@ -10,12 +10,12 @@ namespace VetClinicServer.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class SpeciesController(SpeciesService speciesService) : Controller
     {
         private readonly SpeciesService _speciesService = speciesService;
 
         [HttpGet]
-        [Authorize]
         public async Task<IActionResult> GetPageSpecies([FromQuery] GetPagedSpeciesRequest request)
         {
             PaginatedList<SpeciesViewModel> species = await _speciesService.GetPaged(request);
@@ -29,7 +29,6 @@ namespace VetClinicServer.Controllers
         }
 
         [HttpGet("{id}")]
-        [Authorize]
         public IActionResult GetSpecies(int id)
         {
             try
@@ -44,14 +43,12 @@ namespace VetClinicServer.Controllers
         }
 
         [HttpPost]
-        [Authorize]
         public IActionResult CreateSpecies(SpeciesViewModel model)
         {
             return Ok(_speciesService.Create(model));
         }
 
         [HttpPut]
-        [Authorize]
         public IActionResult UpdateSpecies(SpeciesViewModel model)
         {
             try
@@ -66,7 +63,6 @@ namespace VetClinicServer.Controllers
         }
 
         [HttpDelete]
-        [Authorize]
         public IActionResult DeleteSpecies(int id)
         {
             try
@@ -81,7 +77,6 @@ namespace VetClinicServer.Controllers
         }
 
         [HttpGet("excel")]
-        [Authorize]
         public async Task<IActionResult> ExportToExcel([FromQuery] GetSpeciesExcelRequest request)
         {
             try

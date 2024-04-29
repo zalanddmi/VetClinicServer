@@ -10,12 +10,12 @@ namespace VetClinicServer.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class RoleController(RoleService roleService) : Controller
     {
         private readonly RoleService _roleService = roleService;
 
         [HttpGet]
-        [Authorize]
         public async Task<IActionResult> GetPageRoles([FromQuery] GetPagedRolesRequest request)
         {
             PaginatedList<RoleViewModel> roles = await _roleService.GetPaged(request);
@@ -29,7 +29,6 @@ namespace VetClinicServer.Controllers
         }
 
         [HttpGet("{id}")]
-        [Authorize]
         public IActionResult GetRole(int id)
         {
             try
@@ -44,14 +43,12 @@ namespace VetClinicServer.Controllers
         }
 
         [HttpPost]
-        [Authorize]
         public IActionResult CreateRole(RoleViewModel model)
         {
             return Ok(_roleService.Create(model));
         }
 
         [HttpPut]
-        [Authorize]
         public IActionResult UpdateRole(RoleViewModel model)
         {
             try
@@ -66,7 +63,6 @@ namespace VetClinicServer.Controllers
         }
 
         [HttpDelete]
-        [Authorize]
         public IActionResult DeleteRole(int id)
         {
             try
@@ -81,7 +77,6 @@ namespace VetClinicServer.Controllers
         }
 
         [HttpGet("excel")]
-        [Authorize]
         public async Task<IActionResult> ExportToExcel([FromQuery] GetRolesExcelRequest request)
         {
             try
