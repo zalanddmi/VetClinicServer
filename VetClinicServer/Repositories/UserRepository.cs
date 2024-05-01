@@ -81,9 +81,9 @@ namespace VetClinicServer.Repositories
             {
                 query = query.Where(u => u.Email.Contains(request.Email));
             }
-            if (!string.IsNullOrEmpty(request.PostName))
+            if (!string.IsNullOrEmpty(request.Post))
             {
-                query = query.Where(u => u.Post.Name.Contains(request.PostName));
+                query = query.Where(u => u.Post.Name.Contains(request.Post));
             }
             return query;
         }
@@ -134,7 +134,7 @@ namespace VetClinicServer.Repositories
                             query = query.OrderByDescending(u => u.Email);
                         }
                         break;
-                    case "PostName":
+                    case "Post":
                         if (request.SortDirection == SortDirections.Ascending)
                         {
                             query = query.OrderBy(u => u.Post.Name);

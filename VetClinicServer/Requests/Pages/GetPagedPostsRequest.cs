@@ -2,17 +2,14 @@
 
 namespace VetClinicServer.Requests.Pages
 {
-    public class GetPagedUsersRequest
+    public class GetPagedPostsRequest
     {
         public int PageNumber { get; set; } = 1;
         public int PageSize { get; set; } = 10;
         public string SearchString { get; set; } = string.Empty;
         public string OrderBy { get; set; } = "Id";
         public SortDirections SortDirection { get; set; } = SortDirections.Ascending;
-        public string UserName { get; set; } = string.Empty;
-        public string FIO { get; set; } = string.Empty;
-        public string PhoneNumber { get; set; } = string.Empty;
-        public string Email { get; set; } = string.Empty;
-        public string Post { get; set; } = string.Empty;
+        public string Name { get; set; } = string.Empty;
+        public string Role { get; set; } = string.Empty;
     }
 }

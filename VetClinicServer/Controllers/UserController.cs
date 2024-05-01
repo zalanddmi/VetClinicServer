@@ -11,19 +11,19 @@ namespace VetClinicServer.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
-    public class PetController(PetService petService) : Controller
+    public class UserController(UserService userService) : Controller
     {
-        private readonly PetService _petService = petService;
+        private readonly UserService _userService = userService;
 
         [HttpGet]
-        public async Task<IActionResult> GetPage([FromQuery] GetPagedPetsRequest request)
+        public async Task<IActionResult> GetPage([FromQuery] GetPagedUsersRequest request)
         {
-            PaginatedList<PetViewModel> pets = await _petService.GetPaged(request);
-            var list = new PaginatedListDTO<PetViewModel>
+            PaginatedList<UserViewModel> users = await _userService.GetPaged(request);
+            var list = new PaginatedListDTO<UserViewModel>
             {
-                Items = pets,
-                PageNumber = pets.PageNumber,
-                TotalPages = pets.TotalPages
+                Items = users,
+                PageNumber = users.PageNumber,
+                TotalPages = users.TotalPages
             };
             return Ok(list);
         }
@@ -33,8 +33,8 @@ namespace VetClinicServer.Controllers
         {
             try
             {
-                PetViewModel pet = _petService.GetById(id);
-                return Ok(pet);
+                UserViewModel user = _userService.GetById(id);
+                return Ok(user);
             }
             catch (Exception ex)
             {
@@ -43,17 +43,17 @@ namespace VetClinicServer.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(PetViewModel model)
+        public IActionResult Create(UserViewModel model)
         {
-            return Ok(_petService.Create(model));
+            return Ok(_userService.Create(model));
         }
 
         [HttpPut]
-        public IActionResult Update(PetViewModel model)
+        public IActionResult Update(UserViewModel model)
         {
             try
             {
-                _petService.Update(model);
+                _userService.Update(model);
                 return Ok();
             }
             catch (Exception ex)
@@ -67,7 +67,7 @@ namespace VetClinicServer.Controllers
         {
             try
             {
-                _petService.Delete(id);
+                _userService.Delete(id);
                 return Ok();
             }
             catch (Exception ex)
@@ -77,12 +77,12 @@ namespace VetClinicServer.Controllers
         }
 
         [HttpGet("excel")]
-        public async Task<IActionResult> ExportToExcel([FromQuery] GetPetsExcelRequest request)
+        public async Task<IActionResult> ExportToExcel([FromQuery] GetUsersExcelRequest request)
         {
             try
             {
-                byte[] excelBytes = await _petService.ExportToExcel(request);
-                return Ok(File(excelBytes, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Животные.xlsx"));
+                byte[] excelBytes = await _userService.ExportToExcel(request);
+                return Ok(File(excelBytes, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Пользователи.xlsx"));
             }
             catch (Exception ex)
             {

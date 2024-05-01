@@ -1,12 +1,9 @@
 ﻿using VetClinicServer.Requests.Enums;
 
-namespace VetClinicServer.Requests.Pages
+namespace VetClinicServer.Requests.Excels
 {
-    public class GetPagedUsersRequest
+    public class GetUsersExcelRequest
     {
-        public int PageNumber { get; set; } = 1;
-        public int PageSize { get; set; } = 10;
-        public string SearchString { get; set; } = string.Empty;
         public string OrderBy { get; set; } = "Id";
         public SortDirections SortDirection { get; set; } = SortDirections.Ascending;
         public string UserName { get; set; } = string.Empty;
