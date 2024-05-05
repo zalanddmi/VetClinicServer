@@ -17,9 +17,9 @@ namespace VetClinicServer.Models
         public virtual required User User { get; set; }
         public string? Description { get; set; }
         public DateTime DateAppointment { get; set; }
-        public AppointmentStatuses Status { get; set; } = AppointmentStatuses.Undefined;
+        public AppointmentStatuses Status { get; set; }
         public DateTime? DateCompleted { get; set; }
-        public decimal TotalCost { get; set; } = 0;
+        public decimal TotalCost { get; set; }
 
         public virtual ICollection<AppointmentDrug>? AppointmentDrugs { get; set; }
     }

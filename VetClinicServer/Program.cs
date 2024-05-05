@@ -74,7 +74,8 @@ builder.Services.AddSwaggerGen(options =>
     );
 });
 
-
+builder.Services.AddTransient<AppointmentRepository>();
+builder.Services.AddTransient<AppointmentDrugRepository>();
 builder.Services.AddTransient<DrugRepository>();
 builder.Services.AddTransient<OwnerRepository>();
 builder.Services.AddTransient<PetRepository>();
@@ -84,6 +85,7 @@ builder.Services.AddTransient<RoleRepository>();
 builder.Services.AddTransient<SpeciesRepository>();
 builder.Services.AddTransient<UserRepository>();
 builder.Services.AddTransient<AccountService>();
+builder.Services.AddTransient<AppointmentService>();
 builder.Services.AddTransient<DrugService>();
 builder.Services.AddTransient<OwnerService>();
 builder.Services.AddTransient<PetService>();
