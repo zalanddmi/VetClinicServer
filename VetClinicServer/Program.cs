@@ -86,6 +86,7 @@ builder.Services.AddTransient<SpeciesRepository>();
 builder.Services.AddTransient<UserRepository>();
 builder.Services.AddTransient<AccountService>();
 builder.Services.AddTransient<AppointmentService>();
+builder.Services.AddTransient<ChartService>();
 builder.Services.AddTransient<DrugService>();
 builder.Services.AddTransient<OwnerService>();
 builder.Services.AddTransient<PetService>();
