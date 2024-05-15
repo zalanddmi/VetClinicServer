@@ -234,7 +234,7 @@ namespace VetClinicServer.Services
                 Description = appointment.Description,
                 DateAppointment = appointment.DateAppointment,
                 Status = appointment.Status,
-                DateCompleted = appointment.DateCompleted,
+                DateCompleted = appointment.DateCompleted.HasValue ? appointment.DateCompleted.Value.ToShortDateString() : null,
                 TotalCost = appointment.TotalCost,
             };
             return model;
@@ -264,7 +264,7 @@ namespace VetClinicServer.Services
                     Description = appointment.Description,
                     DateAppointment = appointment.DateAppointment,
                     Status = appointment.Status,
-                    DateCompleted = appointment.DateCompleted,
+                    DateCompleted = appointment.DateCompleted.HasValue ? appointment.DateCompleted.Value.ToShortDateString() : null,
                     TotalCost = appointment.TotalCost,
                 };
                 appointmentViewModels.Add(model);
